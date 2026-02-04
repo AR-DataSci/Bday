@@ -1,117 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday!</title>
-  <style>
-    
-    body {
-      margin: 0;
-      font-family: 'Cooper', sans-serif;
-      background: linear-gradient(120deg, #f665a9, #b707ce);
-      background-image: url(five.jpg);
-      background-repeat: no-repeat;    
-      background-size: cover;
-      background-position: center; 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      text-align: center;
-      color: #fff;
-      flex-direction: column;
-    }
-
-    .hero-section {
-    background-image: url('hero.jpg');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<style>
+  /* --- Body / Background --- */
+  body {
+    margin: 0;
+    font-family: 'Cooper', sans-serif;
+    background: linear-gradient(120deg, #f665a9, #b707ce);
+    background-image: url('five.jpg');
+    background-repeat: no-repeat;    
     background-size: cover;
-    background-position: center;
-    height: 400px; /* adjust height */
-}
+    background-position: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    overflow-x: hidden;
+  }
 
-    h1 {
-      font-size: 4em;
-      animation: pop 1s infinite alternate;
-    }
+  /* --- Headings --- */
+  h1 {
+    font-size: 4em;
+    animation: pop 1s infinite alternate;
+  }
+  h2 {
+    font-size: 2em;
+    margin: 10px 0;
+  }
+  p {
+    font-size: 1.5em;
+  }
 
-    p {
-      font-size: 1.5em;
-    }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+  }
 
-    button {
-      padding: 10px 20px;
-      font-size: 1.2em;
-      cursor: pointer;
-      margin-top: 20px;
-      border: none;
-      border-radius: 10px;
-      background: #fff;
-      color: #fda085;
-    }
+  /* --- Button --- */
+  button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background: #fff;
+    color: #fda085;
+    transition: transform 0.3s;
+  }
+  button:hover {
+    transform: scale(1.1);
+  }
 
-    @keyframes pop {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.2); }
-    }
+  /* --- Images --- */
+  .image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .image-gallery img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 15px;
+  }
 
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #fff;
-      opacity: 0.8;
-      animation: fall 5s linear infinite;
-    }
+  /* --- Confetti --- */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-10px) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+  }
 
-    @keyframes fall {
-      0% { transform: translateY(-10px) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(360deg); }
-    }
-  </style>
+  /* --- Popup text (optional) --- */
+  #popup {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.5em;
+    z-index: 100;
+    text-align: center;
+    max-width: 90%;
+  }
+</style>
 </head>
 <body>
   <h1>🎉 Happy Birthday Par @Alex, 20 ka na! 🎉</h1>
-  <h2> Aunt Status :]</h2>
+  <h2>Aunt Status :]</h2>
   <p>Krazy times</p>
 
-<div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-  <img src="bar.jpg" alt="Bar" style="width:200px; border-radius:15px;">
-  <img src="silco.jpg" alt="Silco" style="width:200px; border-radius:15px;">
-  <img src="lel.jpg" alt="Lel" style="width:380px; border-radius:15px;">
-</div>
-
-
-
-  <button id="surpriseBtn">Click</button>
-
-  <div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
-  background: #fff; color: #000; padding: 30px; border-radius: 15px; font-size: 2em; z-index:100;">
-  Surprise! Tanginamers 🎉
+  <!-- Image Gallery -->
+  <div class="image-gallery">
+    <img src="bar.jpg" alt="Bar">
+    <img src="silco.jpg" alt="Silco">
+    <img src="lel.jpg" alt="Lel">
   </div>
 
-  <script>
-    for(let i = 0; i < 100; i++){
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.left = Math.random() * window.innerWidth + 'px';
-      confetti.style.background = `hsl(${Math.random()*360}, 100%, 75%)`;
-      confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
-      document.body.appendChild(confetti);
-    }
+  <!-- Button -->
+  <button id="surpriseBtn">Click</button>
 
+  <!-- Optional popup -->
+  <div id="popup">Surprise! Tanginamers 🎉</div>
 
-    const btn = document.getElementById('surpriseBtn');
-    const popup = document.getElementById('popup');
+<script>
+  // --- Confetti ---
+  for(let i = 0; i < 50; i++){ // fewer pieces for mobile
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.background = `hsl(${Math.random()*360}, 100%, 75%)`;
+    confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
+    document.body.appendChild(confetti);
+  }
 
-    const audio = new Audio('Black Beatles.mp3'); 
+  // --- Button click for popup and music ---
+  const btn = document.getElementById('surpriseBtn');
+  const popup = document.getElementById('popup');
+  const audio = new Audio('black_beatles.mp3'); // make sure filename matches
 
-    btn.addEventListener('click', () => {
-      popup.style.display = 'block';
-      audio.play(); 
-      setTimeout(() => { popup.style.display = 'none'; }, 5000); 
-    });
-  </script>
+  btn.addEventListener('click', () => {
+    // show popup
+    popup.style.display = 'block';
+    audio.play(); // plays on first interaction (required on mobile)
+    setTimeout(() => { popup.style.display = 'none'; }, 5000); 
+  });
+</script>
 </body>
 </html>

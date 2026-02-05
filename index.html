@@ -4,30 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday!</title>
+
   <style>
     body {
       margin: 0;
       font-family: 'Cooper', sans-serif;
       background: linear-gradient(120deg, #f665a9, #b707ce);
       background-image: url(five.jpg);
-      background-repeat: no-repeat;    
+      background-repeat: no-repeat;
       background-size: cover;
-      background-position: center; 
+      background-position: center;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
       text-align: center;
       color: #fff;
       flex-direction: column;
-    }
-
-    .hero-section {
-      background-image: url('hero.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 400px; /* adjust height */
+      padding: 20px;
     }
 
     h1 {
@@ -37,7 +32,6 @@
 
     h2 {
       font-size: 2em;
-      margin: 10px 0;
     }
 
     p {
@@ -60,13 +54,13 @@
       100% { transform: scale(1.2); }
     }
 
+    /* 🎉 Confetti */
     .confetti {
       position: absolute;
       width: 10px;
       height: 10px;
-      background: #fff;
       opacity: 0.8;
-      animation: fall 5s linear infinite;
+      animation: fall linear infinite;
     }
 
     @keyframes fall {
@@ -74,80 +68,135 @@
       100% { transform: translateY(100vh) rotate(360deg); }
     }
 
-    /* --- Mobile styles --- */
-    @media screen and (max-width: 767px) {
+    /* 🖼️ Images */
+    .image-row {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .image-row img {
+      width: 30%;
+      max-width: 220px;
+      min-width: 120px;
+      border-radius: 15px;
+    }
+
+    .swipe-hint {
+      font-size: 0.9em;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+
+    /* 📱 MOBILE */
+    @media (max-width: 600px) {
       h1 {
-        font-size: 2.5em;
+        font-size: 2em;
       }
 
       h2 {
-        font-size: 1.5em;
+        font-size: 1.2em;
       }
 
       p {
-        font-size: 1.2em;
+        font-size: 1em;
       }
 
       button {
         font-size: 1em;
-        padding: 8px 16px;
       }
 
-      /* Make images responsive */
-      div[style*="display:flex"] img {
-        width: 90%;
-        max-width: 250px;
-        height: auto;
+      .image-row {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
       }
 
-      /* Popup adjustments */
-      #popup {
-        font-size: 1.2em;
-        padding: 20px;
-        max-width: 90%;
+      .image-row img {
+        flex: 0 0 85%;
+        max-width: none;
+        scroll-snap-align: center;
       }
+
+      .image-row::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    @media (min-width: 601px) {
+      .swipe-hint {
+        display: none;
+      }
+    }
+
+    /* 🎁 Popup */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      color: #000;
+      padding: 30px;
+      border-radius: 15px;
+      font-size: 2em;
+      z-index: 100;
+      width: 80%;
+      max-width: 400px;
     }
   </style>
 </head>
+
 <body>
+
   <h1>🎉 Happy Birthday Par @Alex, 20 ka na! 🎉</h1>
-  <h2> Aunt Status :]</h2>
+  <h2>Aunt Status :]</h2>
   <p>Krazy times</p>
 
-  <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-    <img src="bar.jpg" alt="Bar" style="width:200px; border-radius:15px;">
-    <img src="silco.jpg" alt="Silco" style="width:200px; border-radius:15px;">
-    <img src="lel.jpg" alt="Lel" style="width:380px; border-radius:15px;">
+  <div class="image-row">
+    <img src="bar.jpg" alt="Bar">
+    <img src="silco.jpg" alt="Silco">
+    <img src="lel.jpg" alt="Lel">
   </div>
+
+  <p class="swipe-hint">⬅️ Swipe photos ➡️</p>
 
   <button id="surpriseBtn">Click</button>
 
-  <div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
-  background: #fff; color: #000; padding: 30px; border-radius: 15px; font-size: 2em; z-index:100;">
+  <div id="popup">
     Surprise! Tanginamers 🎉
   </div>
 
   <script>
-    // Confetti
-    for(let i = 0; i < 100; i++){
+    // 🎊 Confetti (lighter on phones)
+    const pieces = window.innerWidth < 600 ? 40 : 100;
+
+    for (let i = 0; i < pieces; i++) {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
       confetti.style.left = Math.random() * window.innerWidth + 'px';
-      confetti.style.background = `hsl(${Math.random()*360}, 100%, 75%)`;
+      confetti.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`;
       confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
       document.body.appendChild(confetti);
     }
 
-    // Button click
     const btn = document.getElementById('surpriseBtn');
     const popup = document.getElementById('popup');
-    const audio = new Audio('Black Beatles.mp3'); 
+    const audio = new Audio('Black Beatles.mp3');
 
     btn.addEventListener('click', () => {
       popup.style.display = 'block';
-      audio.play(); 
-      setTimeout(() => { popup.style.display = 'none'; }, 5000); 
+      audio.play();
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 5000);
     });
   </script>
+
 </body>
 </html>

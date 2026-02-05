@@ -1,192 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <!-- ✅ FIXED viewport (prevents zoom/squish) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<!-- ✅ Correct viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Happy Birthday!</title>
+<title>Happy Birthday!</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Cooper', sans-serif;
-      background: linear-gradient(120deg, #f665a9, #b707ce);
-      background-image: url(five.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+  body {
+    margin: 0;
+    font-family: 'Cooper', sans-serif;
+    background: linear-gradient(120deg, #f665a9, #b707ce);
+    background-image: url(five.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
-      /* ❌ REMOVED flex centering (this broke mobile) */
-      color: #fff;
-      text-align: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    /* ❌ removed flex centering */
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px;
+  }
 
-    /* ✅ GLOBAL IMAGE FIX (very important) */
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
+  .container {
+    max-width: 900px;
+    margin: auto;
+  }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+  h1 {
+    font-size: 3rem;
+    animation: pop 1s infinite alternate;
+  }
 
-    h1 {
-      font-size: 3rem;
-      animation: pop 1s infinite alternate;
-    }
+  h2 {
+    font-size: 1.5rem;
+  }
 
-    h2 {
-      font-size: 1.5rem;
-    }
+  p {
+    font-size: 1.2rem;
+  }
 
-    p {
-      font-size: 1.2rem;
-    }
+  @keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
 
-    @keyframes pop {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
+  button {
+    padding: 12px 22px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fff;
+    color: #b707ce;
+    margin-top: 20px;
+  }
 
-    button {
-      padding: 12px 22px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #fff;
-      color: #b707ce;
-      margin-top: 20px;
-    }
+  /* ============================= */
+  /* ✅ IMAGE FIX - stack on phone */
+  /* ============================= */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 
-    /* ============================= */
-    /* ✅ IMAGE SWIPE FIX (YOUR CODE) */
-    /* ============================= */
+  .image-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+  }
 
+  .image-row img {
+    width: 220px; /* desktop size */
+    border-radius: 15px;
+  }
+
+  @media (max-width: 600px) {
     .image-row {
-      display: flex;
-      gap: 15px;
-      margin: 20px 0;
+      flex-direction: column;
+      align-items: center;
     }
 
     .image-row img {
-      flex: 0 0 auto;      /* 🔥 prevents shrinking */
-      width: 85vw;         /* phone-based width */
-      max-width: 320px;    /* desktop safety */
-      border-radius: 15px;
+      width: 90%;
+      max-width: 350px;
     }
 
-    /* 📱 MOBILE SWIPE */
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.2rem; }
-      p  { font-size: 1rem; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.2rem; }
+    p { font-size: 1rem; }
+  }
 
-      .image-row {
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-      }
+  /* POPUP */
+  #popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
 
-      .image-row img {
-        scroll-snap-align: center;
-      }
-    }
+  #popup div {
+    background: #fff;
+    color: #000;
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    max-width: 80%;
+  }
 
-    /* 🎁 POPUP */
-    #popup {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
+  /* CONFETTI */
+  .confetti {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    animation: fall linear infinite;
+    z-index: 1;
+  }
 
-    #popup div {
-      background: #fff;
-      color: #000;
-      padding: 25px;
-      border-radius: 15px;
-      font-size: 1.5rem;
-      max-width: 80%;
-    }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+  }
 
-    /* 🎊 CONFETTI */
-    .confetti {
-      position: fixed;
-      top: -10px;
-      width: 10px;
-      height: 10px;
-      animation: fall linear infinite;
-      z-index: 1;
-    }
-
-    @keyframes fall {
-      to { transform: translateY(110vh) rotate(360deg); }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>🎉 Happy Birthday Par @Alex, 20 ka na! 🎉</h1>
-    <h2>Aunt Status :]</h2>
-    <p>Krazy times</p>
+<div class="container">
+  <h1>🎉 Happy Birthday Par @Alex, 20 ka na! 🎉</h1>
+  <h2>Aunt Status :]</h2>
+  <p>Krazy times</p>
 
-    <div class="image-row">
-      <img src="bar.jpg" alt="Bar">
-      <img src="silco.jpg" alt="Silco">
-      <img src="lel.jpg" alt="Lel">
-    </div>
-
-    <p style="opacity:.8;font-size:.9rem;">⬅️ Swipe photos ➡️</p>
-
-    <button id="surpriseBtn">Click</button>
+  <div class="image-row">
+    <img src="bar.jpg" alt="Bar">
+    <img src="silco.jpg" alt="Silco">
+    <img src="lel.jpg" alt="Lel">
   </div>
 
-  <div id="popup">
-    <div>Surprise! Tanginamers 🎉</div>
-  </div>
+  <p style="opacity:.8;font-size:.9rem;">Images stacked on phone</p>
 
-  <script>
-    // lighter confetti on phones
-    const pieces = window.innerWidth < 600 ? 40 : 100;
+  <button id="surpriseBtn">Click</button>
+</div>
 
-    for (let i = 0; i < pieces; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.left = Math.random() * 100 + 'vw';
-      c.style.background = `hsl(${Math.random()*360},100%,70%)`;
-      c.style.animationDuration = 2 + Math.random()*3 + 's';
-      document.body.appendChild(c);
-    }
+<div id="popup">
+  <div>Surprise! Tanginamers 🎉</div>
+</div>
 
-    const btn = document.getElementById('surpriseBtn');
-    const popup = document.getElementById('popup');
-    const audio = new Audio('Black Beatles.mp3');
+<script>
+  // Confetti (lighter on phones)
+  const pieces = window.innerWidth < 600 ? 40 : 100;
 
-    btn.onclick = () => {
-      popup.style.display = 'flex';
-      audio.play();
-      setTimeout(() => popup.style.display = 'none', 5000);
-    };
-  </script>
+  for (let i = 0; i < pieces; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration = 2 + Math.random()*3 + 's';
+    document.body.appendChild(c);
+  }
+
+  const btn = document.getElementById('surpriseBtn');
+  const popup = document.getElementById('popup');
+
+  btn.onclick = () => {
+    popup.style.display = 'flex';
+    setTimeout(() => popup.style.display = 'none', 5000);
+  };
+</script>
 
 </body>
 </html>

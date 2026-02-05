@@ -1,202 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cooper', sans-serif;
-      background: linear-gradient(120deg, #f665a9, #b707ce);
-      background-image: url(five.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-      text-align: center;
-      color: #fff;
-      flex-direction: column;
-      padding: 20px;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    h1 {
-      font-size: 4em;
-      animation: pop 1s infinite alternate;
-    }
+  body {
+    margin: 0;
+    font-family: 'Cooper', sans-serif;
+    background: url(five.jpg) center / cover no-repeat;
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    h2 {
-      font-size: 2em;
-    }
+  .container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+  }
 
-    p {
-      font-size: 1.5em;
-    }
+  h1 {
+    font-size: 3rem;
+    animation: pop 1s infinite alternate;
+  }
 
-    button {
-      padding: 10px 20px;
-      font-size: 1.2em;
-      cursor: pointer;
-      margin-top: 20px;
-      border: none;
-      border-radius: 10px;
-      background: #fff;
-      color: #fda085;
-    }
+  h2 {
+    font-size: 1.5rem;
+  }
 
-    @keyframes pop {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.2); }
-    }
+  p {
+    font-size: 1.2rem;
+  }
 
-    /* 🎉 Confetti */
-    .confetti {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      opacity: 0.8;
-      animation: fall linear infinite;
-    }
+  @keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
 
-    @keyframes fall {
-      0% { transform: translateY(-10px) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(360deg); }
-    }
+  /* Images */
+  .image-row {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center;
+  }
 
-    /* 🖼️ Images */
+  .image-row img {
+    width: 250px;
+    max-width: 100%;
+    border-radius: 15px;
+  }
+
+  /* Mobile swipe */
+  @media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.2rem; }
+    p  { font-size: 1rem; }
+
     .image-row {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-top: 20px;
+      justify-content: flex-start;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
 
     .image-row img {
-      width: 30%;
-      max-width: 220px;
-      min-width: 120px;
-      border-radius: 15px;
+      flex: 0 0 85%;
+      scroll-snap-align: center;
     }
+  }
 
-    .swipe-hint {
-      font-size: 0.9em;
-      opacity: 0.8;
-      margin-top: 5px;
-    }
+  button {
+    padding: 12px 22px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fff;
+    color: #b707ce;
+  }
 
-    /* 📱 MOBILE */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
+  /* Popup */
+  #popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
 
-      h2 {
-        font-size: 1.2em;
-      }
+  #popup div {
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    max-width: 80%;
+  }
 
-      p {
-        font-size: 1em;
-      }
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    animation: fall linear infinite;
+    z-index: 1;
+  }
 
-      button {
-        font-size: 1em;
-      }
-
-      .image-row {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 10px;
-      }
-
-      .image-row img {
-        flex: 0 0 85%;
-        max-width: none;
-        scroll-snap-align: center;
-      }
-
-      .image-row::-webkit-scrollbar {
-        display: none;
-      }
-    }
-
-    @media (min-width: 601px) {
-      .swipe-hint {
-        display: none;
-      }
-    }
-
-    /* 🎁 Popup */
-    #popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff;
-      color: #000;
-      padding: 30px;
-      border-radius: 15px;
-      font-size: 2em;
-      z-index: 100;
-      width: 80%;
-      max-width: 400px;
-    }
-  </style>
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+  }
+</style>
 </head>
 
 <body>
 
+<div class="container">
   <h1>🎉 Happy Birthday Par @Alex, 20 ka na! 🎉</h1>
   <h2>Aunt Status :]</h2>
   <p>Krazy times</p>
 
   <div class="image-row">
-    <img src="bar.jpg" alt="Bar">
-    <img src="silco.jpg" alt="Silco">
-    <img src="lel.jpg" alt="Lel">
+    <img src="bar.jpg" alt="">
+    <img src="silco.jpg" alt="">
+    <img src="lel.jpg" alt="">
   </div>
 
-  <p class="swipe-hint">⬅️ Swipe photos ➡️</p>
+  <p style="opacity:.8;font-size:.9rem">⬅️ Swipe photos on phone ➡️</p>
 
   <button id="surpriseBtn">Click</button>
+</div>
 
-  <div id="popup">
-    Surprise! Tanginamers 🎉
-  </div>
+<div id="popup">
+  <div>Surprise! Tanginamers 🎉</div>
+</div>
 
-  <script>
-    // 🎊 Confetti (lighter on phones)
-    const pieces = window.innerWidth < 600 ? 40 : 100;
+<script>
+  // Confetti (lighter on phones)
+  const pieces = window.innerWidth < 600 ? 40 : 100;
 
-    for (let i = 0; i < pieces; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.left = Math.random() * window.innerWidth + 'px';
-      confetti.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`;
-      confetti.style.animationDuration = 2 + Math.random() * 3 + 's';
-      document.body.appendChild(confetti);
-    }
+  for (let i = 0; i < pieces; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration = 2 + Math.random()*3 + 's';
+    document.body.appendChild(c);
+  }
 
-    const btn = document.getElementById('surpriseBtn');
-    const popup = document.getElementById('popup');
-    const audio = new Audio('Black Beatles.mp3');
+  const btn = document.getElementById('surpriseBtn');
+  const popup = document.getElementById('popup');
+  const audio = new Audio('Black Beatles.mp3');
 
-    btn.addEventListener('click', () => {
-      popup.style.display = 'block';
-      audio.play();
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 5000);
-    });
-  </script>
+  btn.onclick = () => {
+    popup.style.display = 'flex';
+    audio.play();
+    setTimeout(() => popup.style.display = 'none', 5000);
+  };
+</script>
 
 </body>
 </html>
